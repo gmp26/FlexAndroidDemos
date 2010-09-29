@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					   xmlns:s="library://ns.adobe.com/flex/spark" 
+					   xmlns:mx="library://ns.adobe.com/flex/mx" 
+					   applicationComplete="onAppComplete()" 
+					   xmlns:components="com.dgrigg.components.*">
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayList;
+			
+			import spark.skins.spark.ListSkin;
+			
+			private function onAppComplete():void 
+			{
+				var data:ArrayList = new ArrayList();
+				for (var i:int=0;i<100;i++)
+				{
+					data.addItem(i);
+				}
+				
+				swipeLst.dataProvider = data;
+				listLst.dataProvider = data;
+				dropLst.dataProvider = data;
+				selectLst.dataProvider = data;
+
+			}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		
+	</fx:Declarations>
+	<fx:Style source="css/styles.css"/>
+	
+	<s:layout>
+		<s:VerticalLayout gap="0"/>
+	</s:layout>
+	
+	<s:TabBar dataProvider="{views}"/>
+	
+	<mx:ViewStack id="views" width="100%" height="100%" borderStyle="solid" borderVisible="true">
+		
+		<s:NavigatorContent label="Lists">
+			<s:Label x="50" y="5" text="Swipe List" />
+			<components:SwipeList id="swipeLst"
+								  x="50"
+								  width="100" top="40" bottom="40"
+								  change="{swipeTxt.text = 'selected: ' + swipeLst.selectedItem}"/>
+			
+			<s:Label id="swipeTxt"
+					 x="50"	  bottom="0"  />
+			
+			<s:Label x="250" y="5" text="Standard List"/>
+			<s:List id="listLst"
+					x="250"
+					width="100" top="40" bottom="40"
+					change="{listTxt.text = 'selected: ' + listLst.selectedItem}"
+					skinClass="spark.skins.spark.ListSkin"/>
+			
+			<s:Label id="listTxt" 
+					 x="250" bottom="0" 
+					 />
+		</s:NavigatorContent>
+		
+		<s:NavigatorContent label="Select List" creationPolicy="all">
+			<s:Label x="50" y="5" text="Select List" />
+			<components:SelectField id="selectLst" 
+									x="50"
+									top="40"
+									width="150"
+									change="{selectTxt.text = 'selected: ' + selectLst.selectedItem}"/>
+			
+			<s:Label id="selectTxt" 
+					 x="50" top="100"/>
+			
+			<s:Label x="250" y="5" text="Drop List" />
+			<s:DropDownList id="dropLst" x="250" top="40" change="{dropTxt.text = 'selected: ' + dropLst.selectedItem}"/>
+			<s:Label id="dropTxt" x="250" top="100"/>
+		</s:NavigatorContent>
+	</mx:ViewStack>
+	
+	
+	
+	
+		
+
+</s:Application>

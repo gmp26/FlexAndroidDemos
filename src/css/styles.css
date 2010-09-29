@@ -1,0 +1,174 @@
+/* CSS file */
+@namespace s "library://ns.adobe.com/flex/spark";
+@namespace mx "library://ns.adobe.com/flex/mx";
+@namespace dgrigg "com.dgrigg.components.*";
+
+
+/* SPARK COMPONENTS */
+
+
+
+s|Button 
+{
+	skinClass: ClassReference("com.dgrigg.skins.android.ButtonSkin");
+}
+
+s|Button s|Label 
+{
+	color: #000000;
+	font-size:36px;
+}
+
+s|NavigatorContent 
+{
+	showEffect: showEff;
+	hideEffect: hideEff;
+}
+
+s|ComboBox
+{
+	fontSize:16px;
+}
+
+s|DropDownList
+{
+	fontSize:16px;
+}
+
+s|Label 
+{
+	fontSize:30px;
+}
+
+s|RichEditableText 
+{
+	fontSize:30px;
+}
+
+s|RichText 
+{
+	fontSize:30px;
+}
+
+
+s|List 
+{
+	fontSize:36px;
+	skinClass: ClassReference("com.dgrigg.skins.ListSkin");
+}
+
+s|NumericStepper 
+{
+	fontSize:36px;
+	skinClass: ClassReference('com.dgrigg.skins.NumericStepperSkin');
+}
+
+s|RadioButton 
+{
+	fontSize:36px;
+	skinClass: ClassReference('com.dgrigg.skins.RadioButtonSkin');
+}
+
+s|TextArea
+{
+	fontSize:36px;
+}
+
+s|TextInput 
+{
+	fontSize:36px;
+}
+
+
+s|List
+{
+	contentBackgroundAlpha:1;
+	contentBackgroundColor: #ffffff;
+	color:#000000;
+	rollOverColor: #CEDBEF;
+}
+
+
+s|ComboBox 
+{
+	contentBackgroundAlpha:1;
+	contentBackgroundColor: #ffffff;
+	color:#000000;
+	rollOverColor: #CEDBEF;
+}
+
+
+/* MX COMPONENTS */
+mx|FormItem
+{
+	labelStyleName: FormLabelStyle;
+	
+}
+
+
+.FormLabelStyle
+{
+	fontWeight:bold;
+	fontSize:30px;
+	color: #000000;
+}
+
+
+mx|TextInput 
+{
+	fontSize:36px;
+}
+
+mx|TextArea
+{
+	fontSize:36px;
+}
+
+
+mx|Alert 
+{
+	fontSize:24px;
+	buttonStyleName: alertButtonStyle;
+}
+
+.alertButtonStyle 
+{
+	fontSize:24px;
+	fontWeight:bold;
+}
+
+
+dgrigg|SwipeScroller 
+{
+	skinClass: ClassReference("com.dgrigg.skins.SwipeScrollerSkin");
+}
+
+
+dgrigg|SwipeList 
+{
+	skinClass: ClassReference("com.dgrigg.skins.SwipeListSkin");
+}
+
+dgrigg|ModalSwipeList
+{
+	skinClass: ClassReference("com.dgrigg.skins.ModalSwipeListSkin");
+}
+
+dgrigg|SelectField
+{
+	skinClass: ClassReference("com.dgrigg.skins.SelectFieldSkin");
+}
+
+dgrigg|SelectField s|TextInput 
+{
+	fontSize:36px;
+}
+
+
+
+
+
+
+
+
+
