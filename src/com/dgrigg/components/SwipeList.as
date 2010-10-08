@@ -26,7 +26,7 @@ package com.dgrigg.components
 	
 	public class SwipeList extends List
 	{
-		[SkinPart(name="scroller", type="com.occ.components.SwipeScroller")]
+		[SkinPart(name="scroller", type="com.dgrigg.components.SwipeScroller")]
 		public var swipeScroller:SwipeScroller;
 		
 		public function SwipeList()
