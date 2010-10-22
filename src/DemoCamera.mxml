@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					   xmlns:s="library://ns.adobe.com/flex/spark" 
+					   xmlns:mx="library://ns.adobe.com/flex/mx" 
+					   preloader="com.dgrigg.components.SplashLoader"
+					   applicationComplete="onAppComplete()" 
+					   xmlns:components="com.dgrigg.components.*">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import flash.media.CameraRoll;
+			import flash.media.CameraUI;
+			import flash.media.MediaType;
+			
+			import mx.collections.ArrayCollection;
+			
+			private var camera:CameraUI;
+			private var roll:CameraRoll;
+			
+			[Bindable]
+			private var items:ArrayCollection;
+			
+			
+			private function onAppComplete():void 
+			{
+				items = new ArrayCollection();
+				
+				if (CameraUI.isSupported)
+				{
+					camera = new CameraUI();
+					camera.addEventListener(MediaEvent.COMPLETE, onCameraComplete, false, 0, true);
+				}
+				
+				if (CameraRoll.supportsBrowseForImage)
+				{
+					roll = new CameraRoll();
+					roll.addEventListener(MediaEvent.SELECT, onRollSelect, false, 0, true);
+				}
+			}
+			
+			private function onCameraActivate(event:Event):void 
+			{
+				
+			}
+			
+			private function onCameraCancel(event:Event):void 
+			{
+				
+			}
+			
+			private function onCameraComplete(event:MediaEvent):void 
+			{
+				
+				var media:MediaPromise = event.data;
+				items.addItem(media.file.url);
+				
+			}
+			
+			private function onRollSelect(event:MediaEvent):void 
+			{
+				
+				var media:MediaPromise = event.data;
+				items.addItem(media.file.url);
+			}
+			
+			private function onSnap(event:MouseEvent):void 
+			{
+				camera.launch(MediaType.IMAGE);
+			}
+			
+			private function onPick(event:MouseEvent):void 
+			{
+				roll.browseForImage();
+			}
+		]]>
+	</fx:Script>
+	<fx:Style source="/css/styles.css"/>
+	<s:Panel width="100%" height="100%">
+		<components:SwipeList
+			width="100%" height="100%" dataProvider="{items}">
+			<components:itemRenderer>
+				<fx:Component>
+					<mx:Image height="200" width="400" horizontalCenter="0" scaleContent="true" source="{data}"/>
+				</fx:Component>
+			</components:itemRenderer>
+			<components:layout>
+				<s:TileLayout rowHeight="200" requestedRowCount="3" columnWidth="400" orientation="columns" />
+			</components:layout>
+			
+		</components:SwipeList>
+		
+	
+		<s:controlBarContent>
+			<s:Button label="Snap" click="onSnap(event)" height="60"/>
+			<s:Button label="Pick" click="onPick(event)" height="60"/>
+		</s:controlBarContent>
+		<s:controlBarLayout>
+			<s:HorizontalLayout paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10" gap="10"/>
+		</s:controlBarLayout>
+	</s:Panel>
+	
+	
+</s:Application>

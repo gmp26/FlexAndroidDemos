@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					   xmlns:s="library://ns.adobe.com/flex/spark" 
+					   xmlns:mx="library://ns.adobe.com/flex/mx" 
+					   preloader="com.dgrigg.components.SplashLoader"
+					   applicationComplete="onAppComplete()" 
+					   touchBegin="onTouchBegin(event);" 
+					   touchEnd="onTouchEnd(event)">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Style source="/css/styles.css"/>
+	<fx:Script>
+		<![CDATA[
+			import com.dgrigg.components.TouchPoint;
+			
+			import mx.core.UIComponent;
+			
+			private var points:Array;
+			private var pCount:int = 0;
+			
+			private function onAppComplete():void 
+			{
+				if (flash.ui.Multitouch.supportsTouchEvents)
+				{
+					
+					flash.ui.Multitouch.inputMode = flash.ui.MultitouchInputMode.TOUCH_POINT;
+					status.text = "touch me in " + flash.ui.Multitouch.maxTouchPoints + " places";
+				}
+				else
+				{
+					status.text = "no touch";
+				}
+				
+				points = new Array();
+			}
+			
+			private function onTouchBegin(event:TouchEvent):void 
+			{
+				if (pCount >= flash.ui.Multitouch.maxTouchPoints)
+				{
+					return;
+				}
+				
+				var tp:TouchPoint = new TouchPoint();
+				tp.x = event.stageX;
+				tp.y = event.stageY;
+				tp.startTouchDrag(event.touchPointID);
+				points[event.touchPointID] = tp;
+				addElement(tp);
+				
+				pCount ++
+			}
+			
+			
+			private function onTouchEnd(event:TouchEvent):void 
+			{
+				var point:TouchPoint = points[event.touchPointID];
+				if (point)
+				{
+					delete points[event.touchPointID];
+					pCount--;
+					removeElement(point);
+				}
+			}
+			
+			
+		]]>
+	</fx:Script>
+	<s:layout>
+		<s:BasicLayout/>
+	</s:layout>
+	
+	
+	
+	<s:Label id="status" bottom="0"/>
+	
+</s:Application>

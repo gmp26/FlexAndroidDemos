@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					   xmlns:s="library://ns.adobe.com/flex/spark" 
+					   xmlns:mx="library://ns.adobe.com/flex/mx" 
+					   preloader="com.dgrigg.components.SplashLoader">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Style source="/css/styles.css"/>
+	<fx:Script>
+		<![CDATA[
+			import flash.net.URLRequest;
+			import flash.net.navigateToURL;
+			
+			private function onCall():void 
+			{
+				var request:URLRequest = new URLRequest("tel:" + phoneTxt.text);
+				navigateToURL(request);
+			}
+			
+			private function onEmail():void 
+			{
+				var request:URLRequest = new URLRequest("mailto:" + emailTxt.text);
+				navigateToURL(request);
+			}
+			
+			private function onSms():void 
+			{
+				var request:URLRequest = new URLRequest("sms:" + smsTxt.text);
+				navigateToURL(request);
+			}
+		]]>
+	</fx:Script>
+	<s:layout>
+		<s:VerticalLayout gap="25" paddingTop="10" paddingLeft="10"/>
+	</s:layout>
+	
+	<s:Label text="Messaging Options" fontSize="36" fontWeight="bold"/>
+	<s:HGroup verticalAlign="middle">
+		<s:Label text="Phone" width="100"/>
+		<s:TextInput id="phoneTxt" width="250"/>
+		<s:Button label="GO" click="onCall()"/>
+	</s:HGroup>
+	<s:HGroup verticalAlign="middle">
+		<s:Label text="Email" width="100"/>
+		<s:TextInput id="emailTxt" width="250"/>
+		<s:Button label="GO" click="onEmail()"/>
+	</s:HGroup>
+	<s:HGroup verticalAlign="middle">
+		<s:Label text="SMS" width="100"/>
+		<s:TextInput id="smsTxt" width="250"/>
+		<s:Button label="GO" click="onSms()"/>
+	</s:HGroup>
+</s:Application>

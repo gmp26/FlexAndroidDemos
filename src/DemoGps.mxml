@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					   xmlns:s="library://ns.adobe.com/flex/spark" 
+					   xmlns:mx="library://ns.adobe.com/flex/mx"
+					   xmlns:maps="com.google.maps.*" 
+					   applicationComplete="onAppComplete()" 
+					   preloader="com.dgrigg.components.SplashLoader" 
+					   xmlns:components="com.dgrigg.components.*">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+
+	<fx:Script>
+		<![CDATA[
+			import com.google.maps.LatLng;
+			import com.google.maps.MapEvent;
+			import com.google.maps.MapType;
+			import com.google.maps.overlays.Marker;
+			import com.google.maps.overlays.Polyline;
+			
+			import flash.events.GeolocationEvent;
+			import flash.sensors.Geolocation;
+			import flash.utils.clearInterval;
+			import flash.utils.setInterval;
+			
+			import mx.collections.ArrayList;
+			
+			public var geo:Geolocation;
+			
+			[Bindable]
+			public var points:ArrayList;
+			
+			public var hotSpots:Array;
+			
+			public var mapReady:Boolean;
+			
+			private var lastPoint:Object;
+			
+			private var plotInt:int;
+			
+			private function onAppComplete():void 
+			{
+				points = new ArrayList();
+				
+				
+				statusLbl.text = "LOADING MAP";
+				
+			}
+			
+			private function onMapReady(event:MapEvent):void 
+			{
+				if (Geolocation.isSupported)
+				{
+					geo = new Geolocation();
+					geo.setRequestedUpdateInterval(60000);
+					geo.addEventListener(GeolocationEvent.UPDATE, onGeoUpdate, false, 0, true);
+					geo.addEventListener(StatusEvent.STATUS, onGeoStatus, false, 0, true);
+					statusLbl.text = "GPS RUNNING";
+				}
+				else
+				{
+					statusLbl.text = "NO GEO SUPPORT";
+				}
+				
+			}
+			
+			
+			private function onGeoUpdate(event:GeolocationEvent):void 
+			{
+				var obj:Object = {};
+				
+				obj.altitude = event.altitude;
+				obj.longitude = int(event.longitude*10000)/10000;
+				obj.latitude = int(event.latitude*10000)/10000;
+				
+				statusLbl.text = 'UPDATE: ' ;
+				
+				var skip:Boolean = false;
+				if (lastPoint)
+				{
+					
+					if (obj.latitude == lastPoint.latitude && obj.longitude == lastPoint.longitude)
+					{
+						skip = true;
+					}
+				}
+				
+				if (!skip)
+				{
+					plotPoint(obj);
+				}
+				
+				
+			}
+			
+			private function onGeoStatus(event:StatusEvent):void 
+			{
+				statusLbl.text = "STATUS: " + event.code
+			}
+			
+			
+			
+			
+			
+			
+			private function plotPoint(point:Object):void 
+			{
+				
+				var p1:LatLng = new LatLng(point.latitude, point.longitude)
+				
+				if (!lastPoint)
+				{
+					map.setCenter(new LatLng(point.latitude, point.longitude), 17, MapType.SATELLITE_MAP_TYPE);
+					
+					
+					statusLbl.text = 'Add Marker';
+					var marker:Marker = new Marker(p1);
+					map.addOverlay(marker);
+				}
+				
+				if (lastPoint)
+				{
+					var p2:LatLng = new LatLng(lastPoint.latitude, lastPoint.longitude);
+					
+					var poly:Polyline = new Polyline([p2, p1]);
+					map.addOverlay(poly);
+				}
+				
+				points.addItem({label: 'lat: '+ point.latitude + " lon: "+ point.longitude});
+				
+				
+				lastPoint = point;
+				
+			}
+			
+			private function onMapZoom(event:TransformGestureEvent):void 
+			{
+				
+				var z:int = 0;
+				
+				
+				if (event.scaleX > 1)
+				{
+					z = 1;
+				}
+				else if (event.scaleX < 1)
+				{
+					z = -1;
+				}
+				
+				
+				map.setZoom(map.getZoom() + z);
+				map.setCenter(new LatLng(lastPoint.latitude, lastPoint.longitude));
+			}
+			
+			
+		]]>
+	</fx:Script>
+	
+	<s:Panel width="100%" height="100%">
+		
+			<maps:Map id="map"
+		  		mapevent_mapready="onMapReady(event)" 
+				width="100%" height="100%" 
+				url="http://www.dgrigg.com" 
+				key="ABQIAAAA76h3k8AaLpgZSr8MzEVfmxRl1l6RtNQvUP8a_9Ny5p8wDeJQfhR3NEIjHukCWem2_I0g4o3NqtvG4g"
+				gestureZoom="onMapZoom(event)"/>
+			
+			
+		<s:controlBarContent>
+			<s:Label id="statusLbl" width="100%" fontWeight="bold" fontSize="30" />
+		</s:controlBarContent>
+	</s:Panel>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</s:Application>

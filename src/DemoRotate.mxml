@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" 
+			   preloader="com.dgrigg.components.SplashLoader" 
+			   applicationComplete="onAppComplete()">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Style source="/css/styles.css"/>
+	<fx:Script>
+		<![CDATA[
+			
+			import flash.sensors.Accelerometer;
+			
+			
+			private function onAppComplete():void 
+			{
+				
+				if (stage.autoOrients)
+				{
+					statusTxt.text = "Rotate:\nthis will rotate";
+					stage.addEventListener(StageOrientationEvent.ORIENTATION_CHANGE, onOrientationChange, false, 0, true);
+				}
+				else
+				{
+					statusTxt.text = "Rotate:\ndoes not rotate";
+				}
+				
+				
+				
+				
+			}
+			
+			private function onOrientationChange(event:StageOrientationEvent):void 
+			{
+				statusTxt.text += "\n" + event.beforeOrientation + " " + event.afterOrientation;
+			}
+			
+			
+		]]>
+	</fx:Script>
+	<s:RichText id="statusTxt" width="400" height="400"/>
+	
+</s:Application>

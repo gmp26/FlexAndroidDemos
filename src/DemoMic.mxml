@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+					   xmlns:s="library://ns.adobe.com/flex/spark" 
+					   xmlns:mx="library://ns.adobe.com/flex/mx" 
+					   preloader="com.dgrigg.components.SplashLoader"
+					   applicationComplete="onAppComplete()" >
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import flash.media.Microphone;
+			import flash.media.Sound;
+			import flash.media.SoundChannel;
+			import flash.media.SoundMixer;
+			
+			import mx.collections.ArrayList;
+			
+			private var mic:Microphone;
+			private var soundBytes:ByteArray;
+			private var sound:Sound;
+			
+			
+			private function onAppComplete():void 
+			{
+				if (Microphone.isSupported)
+				{
+					startBtn.enabled = true;
+					statusLbl.text = "Has mic";
+					mic = Microphone.getMicrophone();
+					mic.setUseEchoSuppression(true);
+					mic.setLoopBack(false);
+					mic.setSilenceLevel(0);
+					mic.rate = 44;
+					mic.gain = 100;
+				}
+				else
+				{
+					statusLbl.text = "No mic";
+				}
+				
+				if(Capabilities.cpuArchitecture=="ARM")
+				{
+					NativeApplication.nativeApplication.addEventListener(Event.DEACTIVATE, onDeactivate, false, 0, true);
+					NativeApplication.nativeApplication.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown, false, 0, true);
+				}
+				
+				soundBytes = new ByteArray();
+			}
+			
+			
+			private function onDeactivate(event:Event):void
+			{
+				NativeApplication.nativeApplication.exit();
+			}
+
+			private function onKeyDown(event:KeyboardEvent):void
+			{
+				if(event.keyCode == Keyboard.BACK)
+				{
+					NativeApplication.nativeApplication.exit();
+				}
+			}
+			
+			private function onStart():void 
+			{
+				stopBtn.enabled = true;
+				startBtn.enabled = false;
+				statusLbl.text = "Recording";
+				soundBytes.clear();
+				mic.addEventListener(SampleDataEvent.SAMPLE_DATA, onRecordSampleData);
+				
+				if (sound)
+				{
+					sound.removeEventListener(SampleDataEvent.SAMPLE_DATA, onPlaySampleData);
+				}
+				
+				removeEventListener(Event.ENTER_FRAME, onEnterFrame);
+				
+			}
+			
+			private function onStop():void 
+			{
+				statusLbl.text = "Stopped";
+				stopBtn.enabled = false;
+				startBtn.enabled = true;
+				mic.removeEventListener(SampleDataEvent.SAMPLE_DATA, onRecordSampleData);
+				
+				if (sound)
+				{
+					sound.removeEventListener(SampleDataEvent.SAMPLE_DATA, onPlaySampleData);
+				}
+				
+				removeEventListener(Event.ENTER_FRAME, onEnterFrame);
+				
+			}
+			
+			private function onRecordSampleData(event:SampleDataEvent):void 
+			{
+				soundBytes.writeBytes(event.data);
+				
+				plotWaveForm(event.data);
+				
+			}
+			
+			private function onPlay():void 
+			{
+				soundBytes.position = 0;
+				statusLbl.text = "Playing"
+				sound = new Sound();
+				sound.removeEventListener(SampleDataEvent.SAMPLE_DATA, onPlaySampleData);
+				sound.addEventListener(SampleDataEvent.SAMPLE_DATA, onPlaySampleData);
+				
+				removeEventListener(Event.ENTER_FRAME, onEnterFrame);
+				addEventListener(Event.ENTER_FRAME, onEnterFrame);
+				
+				sound.play();
+			}
+			
+			private function onPlaySampleData(event:SampleDataEvent):void
+			{
+				
+				for (var i:int = 0; i < 8192; i++) 
+				{
+					var sample:Number = 0;
+					if (soundBytes.bytesAvailable > 0)
+					{
+						sample = soundBytes.readFloat();
+					}
+					
+					event.data.writeFloat(sample);
+					event.data.writeFloat(sample);
+				}
+				
+				
+				
+			}
+			
+			private function onEnterFrame(event:Event):void {
+				
+				var bytes:ByteArray = new ByteArray();
+				
+				
+				SoundMixer.computeSpectrum(bytes, false, 0);
+				plotWaveForm(bytes);
+				
+			}
+			
+			public function plotWaveForm(bytes:ByteArray):void 
+			{
+				
+				const PLOT_HEIGHT:int = graph.height/2;
+				
+				const WAVE_WIDTH:int =graph.width;
+				const CHANNEL_LENGTH:int = 256;
+				const SCALE_FACTOR:int = Math.floor(WAVE_WIDTH/CHANNEL_LENGTH);
+				
+				
+				const PAD:int = (WAVE_WIDTH - (SCALE_FACTOR*CHANNEL_LENGTH))/2;
+				var g:Graphics = graph.graphics;
+				var n:Number = 0;
+				var i:int = 0;
+				g.clear();
+				
+				
+				g.lineStyle(0, 0x333333);
+				g.beginFill(0xFF9900, .75);
+				
+				g.moveTo(0, PLOT_HEIGHT);
+				g.lineTo(PAD , PLOT_HEIGHT);
+				
+				for (i = 0; i < CHANNEL_LENGTH; i++) {
+					n = (bytes.readFloat() * PLOT_HEIGHT);
+					g.lineTo(i * SCALE_FACTOR + PAD, PLOT_HEIGHT - n);
+				}
+				
+				g.lineTo(i * SCALE_FACTOR + PAD, PLOT_HEIGHT);
+				g.lineTo(WAVE_WIDTH, PLOT_HEIGHT);
+				g.endFill();
+				
+				
+				g.beginFill(0xff9900, 0.25);
+				
+				g.moveTo(WAVE_WIDTH-PAD, PLOT_HEIGHT);
+				g.lineStyle(0, 0x333333);
+				for (i = CHANNEL_LENGTH; i > 0; i--) {
+					n = (bytes.readFloat() * PLOT_HEIGHT);
+					g.lineTo(i * SCALE_FACTOR+PAD, PLOT_HEIGHT - n);
+				}
+				g.lineTo(i * SCALE_FACTOR + PAD, PLOT_HEIGHT);
+				
+				g.endFill();
+				
+				
+			}
+			
+			
+			
+			
+
+		]]>
+	</fx:Script>
+	<fx:Style source="/css/styles.css"/>
+	
+	<s:Panel title="Mic Demo" width="100%" height="100%">
+			
+		
+		<s:Group id="graph" y="0" height="100%" width="100%"/>
+		
+		
+		<s:controlBarContent>
+			<s:Button id="startBtn" label="Record" click="onStart()" height="60"/>
+			<s:Button id="stopBtn" label="Stop" click="onStop()" height="60"/>
+			<s:Button id="playBtn" label="Play" click="onPlay()" height="60"/>
+			<s:Label id="statusLbl"/>
+		</s:controlBarContent>
+		
+		<s:controlBarLayout>
+			<s:HorizontalLayout paddingTop="10" paddingBottom="10" paddingLeft="10" paddingRight="10" gap="10" verticalAlign="middle"/>
+		</s:controlBarLayout>
+	</s:Panel>
+</s:Application>

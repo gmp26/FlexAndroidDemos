@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/mx" 
+			   preloader="com.dgrigg.components.SplashLoader" 
+			   applicationComplete="onAppComplete()">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			
+			import flash.sensors.Accelerometer;
+			
+			import mx.collections.ArrayList;
+			
+			private var accel:flash.sensors.Accelerometer;
+			private static const SPEED:int = 50;
+			private function onAppComplete():void 
+			{
+				
+				if (flash.sensors.Accelerometer.isSupported)
+				{
+					
+					accel = new flash.sensors.Accelerometer();
+					accel.setRequestedUpdateInterval(20);
+					accel.addEventListener(AccelerometerEvent.UPDATE, onAccelUpdate);
+					text.text = "Accelerometer is ready tilt left/right";
+				}
+				else
+				{
+					text.text = "No accelerometer";
+				}
+				
+				
+				
+				var items:ArrayList = new ArrayList();
+				for (var i:int=0;i<100;i++)
+				{
+					items.addItem(i);
+				}
+				
+				list.dataProvider = items;
+			}
+			
+			private function onAccelUpdate(event:AccelerometerEvent):void 
+			{
+				var dir:int = event.accelerationX > 0 ? 1 : -1;
+				var ax:Number = Math.pow(event.accelerationX * SPEED, 2) * dir ;
+				list.layout.horizontalScrollPosition -= ax;
+				
+				
+			}
+		]]>
+	</fx:Script>
+	<s:Label id="text" fontSize="50"/>
+	<s:List id="list" borderVisible="false" width="100%" fontSize="100" fontWeight="bold" verticalCenter="0">
+		<s:layout>
+			<s:HorizontalLayout gap="20"/>
+		</s:layout>
+	</s:List>
+	
+</s:Application>

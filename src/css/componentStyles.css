@@ -1,0 +1,76 @@
+/* CSS file */
+@namespace s "library://ns.adobe.com/flex/spark";
+@namespace dgrigg "com.dgrigg.components.*";
+
+/* SPARK COMPONENTS */
+s|Label.large
+{
+	font-size:36px;
+}
+
+
+s|Button.spark s|Label 
+{
+	font-size:12px;
+}
+
+s|Button 
+{
+	skinClass: ClassReference("com.dgrigg.skins.ButtonSkin");
+}
+
+s|Button s|Label 
+{
+	color: #000000;
+	font-size:36px;
+}
+
+s|Panel s|Label 
+{
+	font-size:36px;
+}
+
+s|TabBar s|Label 
+{
+	fontSize:36px;
+}
+
+dgrigg|SwipeScroller 
+{
+	skinClass: ClassReference("com.dgrigg.skins.SwipeScrollerSkin");
+}
+
+
+dgrigg|SwipeList 
+{
+	skinClass: ClassReference("com.dgrigg.skins.SwipeListSkin");
+}
+
+dgrigg|SwipeList s|Label 
+{
+	font-size:36px;
+}
+
+dgrigg|ModalSwipeList
+{
+	skinClass: ClassReference("com.dgrigg.skins.ModalSwipeListSkin");
+}
+
+dgrigg|SelectField
+{
+	skinClass: ClassReference("com.dgrigg.skins.SelectFieldSkin");
+}
+
+dgrigg|SelectField s|TextInput 
+{
+	fontSize:36px;
+}
+
+
+
+
+
+
+
+
+
