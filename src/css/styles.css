@@ -7,10 +7,9 @@
 /* SPARK COMPONENTS */
 
 
-
 s|Button 
 {
-	skinClass: ClassReference("com.dgrigg.skins.android.ButtonSkin");
+	skinClass: ClassReference("com.dgrigg.skins.ButtonSkin");
 }
 
 s|Button s|Label 
@@ -57,18 +56,6 @@ s|List
 	skinClass: ClassReference("com.dgrigg.skins.ListSkin");
 }
 
-s|NumericStepper 
-{
-	fontSize:36px;
-	skinClass: ClassReference('com.dgrigg.skins.NumericStepperSkin');
-}
-
-s|RadioButton 
-{
-	fontSize:36px;
-	skinClass: ClassReference('com.dgrigg.skins.RadioButtonSkin');
-}
-
 s|TextArea
 {
 	fontSize:36px;
@@ -95,6 +82,11 @@ s|ComboBox
 	contentBackgroundColor: #ffffff;
 	color:#000000;
 	rollOverColor: #CEDBEF;
+}
+
+s|TabBar s|Label 
+{
+	fontSize:36px;
 }
 
 
@@ -148,6 +140,13 @@ dgrigg|SwipeList
 {
 	skinClass: ClassReference("com.dgrigg.skins.SwipeListSkin");
 }
+
+
+dgrigg|SwipeList s|Label 
+{
+	font-size:36px;
+}
+
 
 dgrigg|ModalSwipeList
 {

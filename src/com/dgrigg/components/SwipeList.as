@@ -18,6 +18,10 @@ package com.dgrigg.components
 	import spark.components.supportClasses.SkinnableComponent;
 	import spark.events.IndexChangeEvent;
 	import spark.events.RendererExistenceEvent;
+	import spark.layouts.HorizontalLayout;
+	import spark.layouts.TileLayout;
+	import spark.layouts.VerticalLayout;
+	import spark.layouts.supportClasses.LayoutBase;
 	
 	//ListBase and List share selection properties that are mx_internal
 	use namespace mx_internal;  
@@ -34,6 +38,14 @@ package com.dgrigg.components
 			super();
 		}
 		
+		override public function set layout(value:LayoutBase):void 
+		{
+			super.layout = value;
+			
+			
+			
+		}
+		
 		override protected function partAdded(partName:String, instance:Object):void 
 		{
 			super.partAdded(partName, instance);
@@ -42,10 +54,9 @@ package com.dgrigg.components
 			if (partName == "scroller")
 			{
 				swipeScroller = instance as SwipeScroller;
+				
+				
 			}
-			
-			
-			
 			
 			if (instance == dataGroup)
 			{
@@ -54,6 +65,35 @@ package com.dgrigg.components
 			
 			
 			
+			
+		}
+		
+		
+		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void 
+		{
+			super.updateDisplayList(unscaledWidth, unscaledHeight);
+			
+			//trace (value);
+			
+			if (swipeScroller)
+			{
+				var sd:String = swipeScroller.swipeDirection;;
+				if (layout is HorizontalLayout)
+				{
+					sd = SwipeScroller.HORIZONTAL;
+					
+				}
+				else if (layout is VerticalLayout)
+				{
+					sd = SwipeScroller.VERTICAL;
+				}
+				else if (layout is TileLayout)
+				{
+					sd = SwipeScroller.BOTH;
+				}
+				
+				swipeScroller.swipeDirection = sd;
+			}
 			
 		}
 		

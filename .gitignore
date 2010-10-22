@@ -12,6 +12,7 @@ obj/*
 .flexLibProperties
 .FlexUnitSettings
 .project
+.p12
 
 *.air
  

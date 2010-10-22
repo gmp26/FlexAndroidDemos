@@ -149,7 +149,7 @@
 			<s:SolidColor color="0xBBBBBB"/>
 		</s:fill>
 	</s:Rect>
-	<s:Label id="titleLbl" left="10" top="10" right="10"/>
+	<s:Label id="titleLbl" left="10" top="10" right="10" fontSize="36"/>
 	
 	<components:SwipeScroller 
 		id="scroller"

@@ -97,8 +97,8 @@ package com.dgrigg.components
 		{
 			list = new ModalSwipeList();
 			list.dataProvider = dataProvider;
-			list.width = stage.width - 50;
-			list.height = stage.height - 50;
+			list.width = stage.stageWidth - 50;
+			list.height = stage.stageHeight - 100;
 			list.selectedItem = _selectedItem;
 			list.title = title;
 
