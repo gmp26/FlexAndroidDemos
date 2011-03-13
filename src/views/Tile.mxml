@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" 
+		title="Tile"
+		creationComplete="onAppComplete()" xmlns:components="com.dgrigg.components.*">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayList;
+			
+			import spark.skins.spark.ButtonSkin;
+			import spark.skins.spark.ListSkin;
+			
+			private function onAppComplete():void 
+			{
+				var data:ArrayList = new ArrayList();
+				for (var i:int=0;i<100;i++)
+				{
+					data.addItem(i);
+				}
+				
+				tileLst.dataProvider = data;
+				
+			}
+		]]>
+	</fx:Script>
+
+	<s:Label x="5" y="5" text="Swipe Tile List" styleName="large"/>
+	<components:SwipeList id="tileLst" 
+						  width="100%" top="40" bottom="40"
+						  change="{tileTxt.text = 'selected: ' + tileLst.selectedItem}">
+		<components:layout>
+			<s:TileLayout  
+				columnWidth="100" rowHeight="100"  
+				requestedColumnCount="10" requestedRowCount="10"/>
+		</components:layout>
+	</components:SwipeList>
+	
+	<s:Label id="tileTxt" 
+			 x="5" bottom="0" styleName="large"/>
+
+</s:View>

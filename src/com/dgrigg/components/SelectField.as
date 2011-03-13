@@ -1,6 +1,8 @@
 package com.dgrigg.components
 {
 	
+	import com.dgrigg.skins.ModalSwipeListSkin;
+	
 	import flash.events.Event;
 	import flash.events.FocusEvent;
 	import flash.events.MouseEvent;
@@ -8,7 +10,7 @@ package com.dgrigg.components
 	
 	import mx.collections.ArrayList;
 	import mx.collections.IList;
-	import mx.controls.TextInput;
+	import mx.core.ClassFactory;
 	import mx.core.IFlexDisplayObject;
 	import mx.events.CloseEvent;
 	import mx.events.FlexEvent;
@@ -18,21 +20,25 @@ package com.dgrigg.components
 	import spark.components.ComboBox;
 	import spark.components.List;
 	import spark.components.SkinnableDataContainer;
+	import spark.components.TextInput;
 	import spark.components.supportClasses.ListBase;
 	import spark.components.supportClasses.SkinnableComponent;
 	import spark.events.IndexChangeEvent;
+	
+	import views.NumberRenderer;
 	
 	
 	[Event(name="change", type="spark.events.IndexChangeEvent")]
 	public class SelectField extends ListBase
 	{
-		[SkinPart(name="textField", type="mx.controls.TextInput")]
+		[SkinPart(name="textField", type="spark.components.TextInput")]
 		public var textInput:TextInput;
 		
 		[SkinPart(name="openButton", type="spark.components.Button")]
 		public var openButton:Button;
 		
 		public var list:ModalSwipeList;
+		private var skinRef:ModalSwipeListSkin;
 		
 		protected var _selectedItem:Object;
 		protected var _selectedIndex:int = -1;
@@ -96,6 +102,7 @@ package com.dgrigg.components
 		protected function popList():void 
 		{
 			list = new ModalSwipeList();
+			list.setStyle("skinClass", ModalSwipeListSkin);
 			list.dataProvider = dataProvider;
 			list.width = stage.stageWidth - 50;
 			list.height = stage.stageHeight - 100;

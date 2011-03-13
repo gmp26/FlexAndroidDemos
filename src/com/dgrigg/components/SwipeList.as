@@ -14,6 +14,7 @@ package com.dgrigg.components
 	import spark.components.Button;
 	import spark.components.IItemRenderer;
 	import spark.components.List;
+	import spark.components.Scroller;
 	import spark.components.supportClasses.ListBase;
 	import spark.components.supportClasses.SkinnableComponent;
 	import spark.events.IndexChangeEvent;
@@ -31,7 +32,7 @@ package com.dgrigg.components
 	public class SwipeList extends List
 	{
 		[SkinPart(name="scroller", type="com.dgrigg.components.SwipeScroller")]
-		public var swipeScroller:SwipeScroller;
+		public var swipeScroller:Scroller;
 		
 		public function SwipeList()
 		{
@@ -41,9 +42,6 @@ package com.dgrigg.components
 		override public function set layout(value:LayoutBase):void 
 		{
 			super.layout = value;
-			
-			
-			
 		}
 		
 		override protected function partAdded(partName:String, instance:Object):void 
@@ -53,21 +51,17 @@ package com.dgrigg.components
 			
 			if (partName == "scroller")
 			{
-				swipeScroller = instance as SwipeScroller;
-				
-				
+				swipeScroller = instance as Scroller;
 			}
 			
 			if (instance == dataGroup)
 			{
 				dataGroup.addEventListener(RendererExistenceEvent.RENDERER_ADD, dataGroup_rendererAddHandler);
 			}
-			
-			
-			
-			
 		}
 		
+		/*
+		private var swipeDirection:String = SwipeScroller.VERTICAL;
 		
 		override protected function updateDisplayList(unscaledWidth:Number, unscaledHeight:Number):void 
 		{
@@ -77,25 +71,29 @@ package com.dgrigg.components
 			
 			if (swipeScroller)
 			{
-				var sd:String = swipeScroller.swipeDirection;;
+				//var sd:String = swipeScroller.  .swipeDirection;;
 				if (layout is HorizontalLayout)
 				{
-					sd = SwipeScroller.HORIZONTAL;
+					//sd = SwipeScroller.HORIZONTAL;
+					swipeDirection = SwipeScroller.HORIZONTAL;
 					
 				}
 				else if (layout is VerticalLayout)
 				{
-					sd = SwipeScroller.VERTICAL;
+					//sd = SwipeScroller.VERTICAL;
+					swipeDirection = SwipeScroller.VERTICAL;
 				}
 				else if (layout is TileLayout)
 				{
-					sd = SwipeScroller.BOTH;
+					//sd = SwipeScroller.BOTH;
+					swipeDirection = SwipeScroller.BOTH;
 				}
 				
-				swipeScroller.swipeDirection = sd;
+				//swipeScroller.swipeDirection = sd;
 			}
 			
 		}
+		*/
 		
 		/**
 		 *  @private
@@ -349,11 +347,13 @@ package com.dgrigg.components
 		
 		protected function item_mouseUpHandler(event:MouseEvent):void
 		{
+			/*
 			if (swipeScroller.isScrolling())
 			{
 				
 			}
 			else
+			*/
 			{
 				// Handle the fixup of selection
 				var newIndex:int

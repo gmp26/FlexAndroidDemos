@@ -8,7 +8,6 @@ package com.dgrigg.components
 	import flash.text.TextField;
 	import flash.utils.Timer;
 	
-	import mx.controls.Image;
 	import mx.events.FlexEvent;
 	import mx.events.RSLEvent;
 	import mx.preloaders.DownloadProgressBar;

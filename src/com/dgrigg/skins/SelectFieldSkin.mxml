@@ -56,7 +56,7 @@ for the PopUpAnchor defined by the popUp property.</p>
 			  skinClass="com.dgrigg.skins.SelectFieldListButtonSkin" verticalCenter="0" />  
 	
 	<!--- @copy spark.components.DropDownList#labelDisplay -->
-	<mx:TextInput id="textInput" 
+	<s:TextInput id="textInput" 
 				  verticalCenter="0"
 			 left="0" right="45" top="0" bottom="0"/> 
 	

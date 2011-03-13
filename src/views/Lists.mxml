@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" 
+		title="Lists" 
+		xmlns:components="com.dgrigg.components.*"
+		creationComplete="onAppComplete()">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayList;
+			
+			import spark.skins.spark.ButtonSkin;
+			import spark.skins.spark.ListSkin;
+			
+			private function onAppComplete():void 
+			{
+				var data:ArrayList = new ArrayList();
+				for (var i:int=0;i<100;i++)
+				{
+					data.addItem(i);
+				}
+				
+				swipeLst.dataProvider = data;
+//				tileLst.dataProvider = data;
+				listLst.dataProvider = data;
+//				dropLst.dataProvider = data;
+//				selectLst.dataProvider = data;
+				
+			}
+		]]>
+	</fx:Script>
+
+	<s:Label x="50" y="5" text="Swipe List" styleName="large"/>
+	
+	<components:SwipeList id="swipeLst"
+						  x="50"
+						  width="100" top="40" bottom="40"
+						  change="{swipeTxt.text = 'selected: ' + swipeLst.selectedItem}">
+		
+	</components:SwipeList>
+	
+	<s:Label id="swipeTxt"
+			 x="50"	  bottom="0" styleName="large" />
+	
+	<s:Label x="250" y="5" text="Standard List" styleName="large"/>
+	<s:List id="listLst"
+			x="250"
+			width="100" top="40" bottom="40"
+			change="{listTxt.text = 'selected: ' + listLst.selectedItem}"
+			skinClass="spark.skins.spark.ListSkin"/>
+	
+	<s:Label id="listTxt" 
+			 x="250" bottom="0" styleName="large"/>
+
+</s:View>

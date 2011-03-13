@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:View xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		xmlns:s="library://ns.adobe.com/flex/spark" title="UI">
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:VGroup width="220">
+		<s:Button label="Button" skinClass="spark.skins.spark.ButtonSkin" styleName="spark" />
+		
+		<s:CheckBox label="Check box"/>
+		<s:RadioButton label="Option 1" value="1" groupName="rad1" />
+		<s:RadioButton label="Option 2" value="2" groupName="rad1" />
+		<s:RadioButton label="Option 3" value="3" groupName="rad1" />
+		<s:HSlider styleName="spark"/>
+		<s:NumericStepper />
+		<s:TextArea  width="200" >
+			<s:text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam arcu leo, ullamcorper in tincidunt et, venenatis vitae felis. Suspendisse at neque leo. Donec tristique mi nec urna molestie quis porttitor ligula congue. In eget sapien sed justo sagittis elementum.</s:text>
+		</s:TextArea>
+	</s:VGroup>
+	<s:VGroup width="220" x="225" gap="20">
+		
+		<s:Button label="Button" skinClass="com.dgrigg.skins.ButtonSkin"/>
+		<s:CheckBox label="Check box" skinClass="com.dgrigg.skins.CheckBoxSkin"/>
+		<s:RadioButton label="Option 1" value="1" groupName="rad1" skinClass="com.dgrigg.skins.RadioButtonSkin"/>
+		<s:RadioButton label="Option 2" value="2" groupName="rad1" skinClass="com.dgrigg.skins.RadioButtonSkin"/>
+		<s:RadioButton label="Option 3" value="3" groupName="rad1" skinClass="com.dgrigg.skins.RadioButtonSkin"/>
+		<s:HSlider skinClass="com.dgrigg.skins.HSliderSkin"/>
+		<s:NumericStepper skinClass="com.dgrigg.skins.NumericStepperSkin"/>
+		<s:TextArea width="200" fontSize="36">
+			<s:text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam arcu leo, ullamcorper in tincidunt et, venenatis vitae felis. Suspendisse at neque leo. Donec tristique mi nec urna molestie quis porttitor ligula congue. In eget sapien sed justo sagittis elementum.</s:text>
+		</s:TextArea>
+	</s:VGroup>
+	
+
+</s:View>
