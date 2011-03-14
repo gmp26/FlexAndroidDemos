@@ -36,7 +36,6 @@
 							top="40"
 							width="150"
 							change="{selectTxt.text = 'selected: ' + selectLst.selectedItem}"
-							skinClass="com.dgrigg.skins.SelectFieldSkin"
 							/>
 	
 	<s:Label id="selectTxt" 

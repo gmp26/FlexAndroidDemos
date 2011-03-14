@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Skin xmlns:s="library://ns.adobe.com/flex/spark" xmlns:fx="http://ns.adobe.com/mxml/2009">
+	<fx:Metadata>[HostComponent("spark.components.ToggleButton")]</fx:Metadata>
+	<s:states>
+		<s:State name="up"/>
+		<s:State name="over"/>
+		<s:State name="down"/>
+		<s:State name="disabled"/>
+		<s:State name="upAndSelected"/>
+		<s:State name="overAndSelected"/>
+		<s:State name="downAndSelected"/>
+		<s:State name="disabledAndSelected"/>
+	</s:states>
+	<s:Rect height="96" radiusX="30" width="96" x="0" y="0" alpha.up="0.98" id="rect3" alpha.disabled="0.5" alpha.upAndSelected="0.98" alpha.disabledAndSelected="0.5">
+		<s:fill>
+			<s:SolidColor color="#000000"/>
+		</s:fill>
+		<s:filters>
+			<s:GlowFilter includeIn="up" blurX="6.0" blurY="6.0" color="0x5380d0" inner="false" strength="1" alpha="1.0" quality="2" knockout="false"/>
+			<s:GlowFilter includeIn="upAndSelected" blurX="6.0" blurY="6.0" color="#FDFF00" inner="false" strength="1" alpha="1.0" quality="2" knockout="false"/>
+			<s:GlowFilter includeIn="overAndSelected" blurX="6.0" blurY="6.0" color="#FDFF00" inner="false" strength="1" alpha="1.0" quality="2" knockout="false"/>
+			<s:GlowFilter includeIn="downAndSelected" blurX="6.0" blurY="6.0" color="#FDFF00" inner="true" strength="1" alpha="1.0" quality="2" knockout="false"/>
+			<s:DropShadowFilter includeIn="disabledAndSelected" blurX="3" hideObject="false" blurY="3" distance="0" color="0x000000" inner="true" strength="1" alpha="1" quality="2" knockout="false" angle="45.0"/>
+		</s:filters>
+	</s:Rect>
+	<s:Rect alpha="0.4" height="48" id="rect1" radiusX="30" width="88" x="4" y="5" visible.down="false" includeIn="disabled,down,over,overAndSelected,up,upAndSelected">
+		<s:fill>
+			<s:SolidColor color="#999999"/>
+		</s:fill>
+	</s:Rect>
+	<s:RichText x="13" y="27" fontFamily="Arial Rounded MT Bold" fontSize="60" text="99" id="richtext1" color.over="#FFFFFF" tabStops.over="S0 S50" color.down="#FFFFFF" color.disabled="#CCCCCC" color.upAndSelected="#FFCB00" color.up="#CCCCCC" color.overAndSelected="#FEFFCA" tabStops.down="S0 S50" tabStops.disabled="S0 S50 S100" tabStops.upAndSelected="S0 S50" tabStops.up="S0 S50 S100" tabStops.overAndSelected="S0 S50" color.downAndSelected="#FEFFCA" tabStops.downAndSelected="S0 S50" includeIn="disabled,down,downAndSelected,over,overAndSelected,up,upAndSelected"/>
+	<s:Rect height="96" id="rect2" radiusX="30" width="96" x="0" y="0" visible.down="false" includeIn="disabled,disabledAndSelected,down,over,overAndSelected,up,upAndSelected" visible.disabledAndSelected="false">
+		<s:fill>
+			<s:SolidColor color="#CCCCCC"/>
+		</s:fill>
+		<s:filters>
+			<s:DropShadowFilter alpha="1" angle="45.0" blurX="4.0" blurY="4.0" color="#666666" distance="0" hideObject="false" inner="true" knockout="true" quality="2" strength="3"/>
+		</s:filters>
+	</s:Rect>
+	<s:transitions>
+		<s:Transition fromState="down" toState="up" autoReverse="true">
+			<s:Parallel>
+				<s:Parallel target="{rect3}">
+					<s:Fade duration="0"/>
+				</s:Parallel>
+				<s:Parallel target="{rect1}">
+					<s:Fade duration="0"/>
+				</s:Parallel>
+				<s:Parallel target="{rect2}">
+					<s:Fade duration="0"/>
+				</s:Parallel>
+			</s:Parallel>
+		</s:Transition>
+		<s:Transition fromState="up" toState="over" autoReverse="true">
+			<s:Parallel>
+				<s:Parallel target="{rect3}">
+					<s:Fade duration="0"/>
+				</s:Parallel>
+			</s:Parallel>
+		</s:Transition>
+	</s:transitions>
+</s:Skin>

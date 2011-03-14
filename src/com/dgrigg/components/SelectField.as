@@ -102,7 +102,7 @@ package com.dgrigg.components
 		protected function popList():void 
 		{
 			list = new ModalSwipeList();
-			list.setStyle("skinClass", ModalSwipeListSkin);
+			//list.setStyle("skinClass", ModalSwipeListSkin);
 			list.dataProvider = dataProvider;
 			list.width = stage.stageWidth - 50;
 			list.height = stage.stageHeight - 100;
